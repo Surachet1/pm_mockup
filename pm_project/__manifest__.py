@@ -2,13 +2,13 @@
 # © <YEAR(S)> <AUTHOR(S)>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Trinity Roots :: PM - CRM",
-    "summary": "CRM",
+    "name": "Trinity Roots :: PM - Project",
+    "summary": "Project",
     "version": "10.0.1.0.0",
     "category": "CRM",
     "description": """
 
-This module for CRM.
+This module for Project.
 ===========================================================
 
 
@@ -24,9 +24,9 @@ This module for CRM.
     },
     "depends": [
         'base',
-        'crm',
+        'project',
     ],
     'data': [
-        'views/crm_lead_view.xml',
+        'views/project_views.xml',
     ],
 }

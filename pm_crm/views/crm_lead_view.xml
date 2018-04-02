@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="crm_lead_view" model="ir.ui.view">
+        <field name="name">crm.lead.view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id"
+               ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="before">
+                <field name="source_op"/>
+            </field>
+            <field name="user_id" position="before">
+                <field name="department"/>
+                <field name="manager_id"/>
+            </field>
+            <field name="priority" position="replace">
+                <field name="house_type"/>
+                <field name="no_maid"/>
+                <field name="job_category"/>
+                <field name="location_sign"/>
+                <field name="location_send"/>
+            </field>
+            <field name="tag_ids" position="replace">
+                <field name="no_service"/>
+                <field name="freq_service"/>
+                <field name="time_service"/>
+            </field>
+            <field name="team_id" position="after">
+                <field name="priority" widget="priority"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
