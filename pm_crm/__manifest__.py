@@ -28,5 +28,6 @@ This module for CRM.
     ],
     'data': [
         'views/crm_lead_view.xml',
+        'views/partner_view.xml',
     ],
 }
