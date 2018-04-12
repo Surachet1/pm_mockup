@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="sale_order_view" model="ir.ui.view">
+        <field name="name">sale.order.view.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <button name="action_confirm" position="after">
+                <button name="action_revise" states="draft,sent" string="Revise Sale" type="object" />
+            </button>
+            <field name="partner_id" position="after">
+                <field name="partner_contact_id" domain="[('parent_id', '=', partner_id)]"/>
+                <field name="code"/>
+                <field name="partner_invoice_id"/>
+                <field name="partner_shipping_id"/>
+            </field>
+            <field name="date_order" position="after">
+                <field name="ref"/>
+                <field name="warehouse_id"/>
+                <field name="ref"/>
+                <field name="quo_temp"/>
+            </field>
+            <field name="validity_date" position="after">
+                <field name="pricelist_id"/>
+                <field name="contract_no"/>
+                <field name="invoice_no"/>
+                <field name="receipt_no"/>
+            </field>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="replace">
+                <field name="account_analytic_id"/>
+                <field name="date_start"/>
+                <field name="date_finishes"/>
+                <field name="cost_price"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                <field name="margin"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="after">
+                <field name="line_cost_ids">
+                    <tree editable="bottom">
+                        <field name="sale_line_id"/>
+                        <field name="product_id"/>
+                        <field name="name"/>
+                        <field name="product_qty"/>
+                        <field name="cost_price"/>
+                        <field name="price_unit"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
