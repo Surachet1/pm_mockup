@@ -1,4 +1,15 @@
+# -*- coding: utf-8 -*-
 from odoo import api, fields, models, _, exceptions
+
+class AccInvPop(models.TransientModel):
+    _name = 'account.inv.pop'
+
+    date_start = fields.Date(
+        string='Date Start',
+    )
+    date_stop = fields.Date(
+        string='Date Stop',
+    )
 
 class AccountInvoice(models.Model):
 
@@ -39,6 +50,14 @@ class AccountAccuredIncome(models.Model):
         'account.accured.income.line',
         'accured_id',
         'Accured Line'
+    )
+    state = fields.Selection(
+        [
+            ('draft', 'Draft'),
+            ('post', 'Post'),
+        ],
+        string='State',
+        default='draft',
     )
 
 

@@ -25,6 +25,7 @@ This module for Project.
     "depends": [
         'base',
         'sale',
+        'website_quote',
     ],
     'data': [
         'views/sale_views.xml',

@@ -10,19 +10,27 @@
                     <button name="button_to_approve" states="draft"
                             string="Request Stock" type="object"
                             class="oe_highlight"/>
-                    <button name="button_approved"
-                            states="to_approve"
-                            string="Approve"
+                    <button name="button_manager_approved"
+                            states="wait_manager_approve"
+                            string="Manager Approve"
                             type="object"
-                            class="oe_highlight"
-                            invisible="1"/>
+                            class="oe_highlight"/>
+                    <button name="button_purchase_approved"
+                            states="wait_purchase_approve"
+                            string="Purchase Approve"
+                            type="object"
+                            class="oe_highlight"/>
                     <button name="button_rejected"
-                            states="to_approve,approved"
+                            states="wait_manager_approve,wait_purchase_approve"
+                            string="Reject"
+                            type="object"/>
+                    <button name="button_cancel"
+                            states="wait_manager_approve,wait_purchase_approve,approved"
                             string="Cancel"
                             type="object"/>
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,to_approve,approved,rejected"
-                           statusbar_colors='{"approved":"blue"}'/>
+                           statusbar_visible="draft,wait_manager_approve,wait_purchase_approve,approved,rejected,cancel"
+                           statusbar_colors='{"approved":"blue", "rejected":"red"}'/>
                 </header>
                 <sheet>
                     <div class="oe_edit_only">
@@ -41,20 +49,40 @@
                                    attrs="{'readonly': [('is_editable','=', False)]}"/>
                             <field name='schedule_date'
                                    attrs="{'readonly': [('is_editable','=', False)]}"/>
-                            <field name="warehouse_id"
+                            <field name="date_contract_start"
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name="date_contract_finishes"
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name="contract_name"
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name="contract_period"
                                    attrs="{'readonly': [('is_editable','=', False)]}"/>
                             <field name="company_id" groups="base.group_multi_company" widget="selection"
                                    attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name="is_sale_more"
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
                         </group>
                         <group>
-                            <field name="description"
-                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
                             <field name="sale_order_id"
-                                   attrs="{'readonly': True}"/>
-                            <field name="origin" class="oe_inline"
                                    attrs="{'readonly': [('is_editable','=', False)]}"/>
-                             <field name='customer_id'/>
-                            <field name='customer_name'/>
+                            <field name='project_id'
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name='customer_id'
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name='customer_name'
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name='customer_phone'
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name='customer_location'
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name='date_received'
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name="sale_type"
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name="budget"
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
+                            <field name="balance"
+                                   attrs="{'readonly': [('is_editable','=', False)]}"/>
                         </group>
                     </group>
                     <notebook>
@@ -63,11 +91,11 @@
                                  <tree editable="bottom">
                                     <field name="product_id"/>
                                     <field name="name"/>
-                                    <field name="product_qty"/>
+                                    <field name="product_type"/>
                                     <field name="product_uom_id" groups="product.group_uom"/>
-                                    <field name="analytic_account_id"
-                                           groups="analytic.group_analytic_accounting" required="1"/>
-                                    <field name="date_required"/>
+                                    <field name="product_qty"/>
+                                    <field name="qty_available"/>
+                                    <field name="purchase_qty"/>
                                     <field name="cost_price"/>
                                     <field name="is_editable" invisible="1"/>
                                 </tree>
@@ -106,6 +134,15 @@
                             <group>
                                 <field name='delivery_note'/>
                             </group>
+                        </page>
+                        <page string="Remind">
+                            <field name="remine_ids">
+                                <tree editable="bottom">
+                                    <field name="desc"/>
+                                    <field name="date_remine"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>

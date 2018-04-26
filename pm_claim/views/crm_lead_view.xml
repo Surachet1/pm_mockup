@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="crm_lead_claim_view" model="ir.ui.view">
+        <field name="name">crm.lead.view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id"  ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <button name="action_schedule_meeting" position="after">
+                <button class="oe_stat_button" name="open_partner_claim" icon="fa-ticket"
+                    type="object" attrs="{'invisible': ['|', ('partner_id', '=', False), ('partner_claim', '&lt;=', 1)]}">
+                    <field name="partner_claim" string="Claim" widget="statinfo" />
+                </button>
+            </button>
+        </field>
+    </record>
+
+    </data>
+</odoo>

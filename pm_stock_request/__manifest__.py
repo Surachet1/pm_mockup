@@ -25,6 +25,7 @@ This module for Stock Request.
     "depends": [
         'base',
         'stock',
+        'project',
     ],
     'data': [
         'views/stock_request_view.xml',

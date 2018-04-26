@@ -1,13 +1,39 @@
 <?xml version="1.0"?>
 <odoo>
 
+    <record id="pop_up_view_form" model="ir.ui.view">
+        <field name="name">pop.up.form</field>
+        <field name="model">account.inv.pop</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Reason">
+                <group class="oe_title">
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
+                </group>
+                <footer>
+                    <button name="action_cancel_reason_apply" string="Submit" type="object" class="btn btn-sm btn-primary"/>
+                    <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="pop_up_action" model="ir.actions.act_window">
+        <field name="name">Pop-up</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.inv.pop</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pop_up_view_form"/>
+        <field name="target">new</field>
+    </record>
+
     <record id="invoice_form" model="ir.ui.view">
         <field name="name">account.invoice.form</field>
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
             <button name="action_invoice_open" position="after">
-                <button name="action_invoice_conpute" type="object" states="draft,proforma2" string="Compute Amount" attrs="{'invisible': [('type', '=', 'out_refund')]}"/>
+                <button name="%(pop_up_action)d" type="action" states="draft,proforma2" string="Compute Amount" attrs="{'invisible': [('type', '=', 'out_refund')]}"/>
             </button>
             <field name="payment_term_id" position="after">
                 <field name="contract_no"/>
@@ -96,6 +122,11 @@
         <field name="model">account.accured.income</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="button_confirm" string="Confirm" states="draft" type="object" />
+                    <button name="button_cancel" string="Cancel" states="draft" type="object" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,post"/>
+                </header>
                 <sheet>
                     <group>
                         <group>

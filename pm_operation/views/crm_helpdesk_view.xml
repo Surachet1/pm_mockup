@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="crm_case_tree_view_helpdesk">
+        <field name="name">CRM - Helpdesk Support Tree</field>
+        <field name="model">crm.helpdesk</field>
+        <field name="arch" type="xml">
+            <tree string="Helpdesk Support Tree"
+                colors="black:state=='open';blue:state=='pending';gray:state in ('cancel','done')">
+                <field name="seq"/>
+                <field name="name" string="Subject" />
+                <field name="customer_code" string="Code"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="phone"/>
+                <field name="date" string="Date"/>
+                <field name="service_head"/>
+                <field name="state"/>
+                <field name="service_type2"/>
+                <field name="record"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="crm_case_form_view_helpdesk">
+        <field name="name">CRM - Helpdesk Support Form</field>
+        <field name="model">crm.helpdesk</field>
+        <field name="arch" type="xml">
+            <form string="Helpdesk Support">
+            <header>
+                <button name="case_open" string="Assigned" type="object" states="draft" class="oe_highlight"/>
+                <button name="case_pending" string="Pending" type="object" states="open"/>
+                <button name="case_close" string="Close" type="object" states="open,pending" class="oe_highlight"/>
+                <button name="case_cancel" string="Cancel" type="object" states="draft,open,pending"/>
+                <button name="check_available" string="Check Availability" type="object"/>
+                <button name="case_cancel_done" string="Force Cancel" type="object" states="done"/>
+                <field name="state" nolabel="1" widget="statusbar" clickable="True"
+                        statusbar_colors='{"pending":"blue"}'/>
+            </header>
+            <sheet string="Helpdesk Support">
+                <group col="4" class="oe_header">
+                    <field name="name" string="Subject"/>
+                    <field name="seq" />
+                    <field name="service_head" required="True" string="1st Service Person"/>
+                    <field name="date_display" readonly="1"/>
+                    <field name="service" widget="many2many_tags" string="2nd Service Person"/>
+                    <field name="team_id" />
+                    <field name="is_close" readonly="True" />
+                    <field name="date_deadline"/>
+                    <field name="service_type2"/>
+                    <field name="users_response" widget="many2many_tags" invisible="True" />
+                    <field name="project_id" attrs="{'invisible': [('type', '=', 'hc')]}"/>
+                    <field name="type" invisible="1"/>
+                </group>
+                <notebook>
+                    <page string="Service Contract" >
+                        <field name="service_order" domain="[('state', 'in', ('active','expiring'))]" attrs="{'readonly':[('state','not in',('draft'))],}">
+                            <tree>
+                                <field name="name" />
+                                <field name="sale_order" />
+                                <field name="customer" />
+                                <field name="phone" />
+                                <field name="service_count" />
+                                <field name="month_count" />
+                                <field name="start_date" />
+                                <field name="finish_date" />
+                                <field name="state"/>
+                            </tree>
+                         </field>
+                    </page>
+                    <page string="Date and Time">
+                        <group>
+                            <group>
+                                <field name="date_cal" />
+                                <field name="select_day_cal" />
+                                <field name="hour_cal" />
+                                <field name="minute_cal" />
+                            </group>
+                            <group>
+                                <button name="cal_date" string="Pick" type="object"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Customer Address">
+                        <group>
+                            <group string="Communication">
+                                <field name="partner_id"
+                                    string="Customer"/>
+                                <field name="phone" />
+                                <field name="customer_code" string="Code"/>
+                                <field name="customer_address" string="Address"/>
+                                <field name="email_from"/>
+                            </group>
+                            <group string="Categorization">
+                                <field name="priority" widget="priority"/>
+                            </group>
+                        </group>
+
+                        <separator string="Notes"/>
+                        <field name="description"/>
+                    </page>
+                    <page string="Customer Evaluation">
+                        <group>
+                            <group>
+                                <field name="record"/>
+                                <field name="problem"/>
+                                <field name="customer_review" />
+                                <field name="customer_score"/>
+                                <field name="overseer_score"/>
+                            </group>
+                            <group>
+                                <div class="oe_edit_only">
+                                    <small>
+                                                5 = Very Good <br />
+                                                4 = Good <br />
+                                                3 = Normal<br />
+                                                2 = Disappointed<br />
+                                                1 = Very Disappointed<br />
+                                    </small>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Extra Info">
+                        <group>
+                            <group groups="base.group_no_one" string="Dates">
+                                <field name="create_date"/>
+                                <field name="write_date"/>
+                                <field name="date_closed"/>
+                            </group>
+                            <group string="Misc">
+                                <field name="id"/>
+                                <field name="active"/>
+                            </group>
+                            <group string="Estimates">
+                                <field name="planned_cost"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Attendees">
+                        <field name="emp_ids"/>
+                    </page>
+                </notebook>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_helpdesk_hc_action" model="ir.actions.act_window">
+        <field name="name">Job</field>
+        <field name="res_model">crm.helpdesk</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="domain">[('type', '=', 'hc')]</field>
+        <field name="context">{'default_type': 'hc'}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create new Service.
+          </p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="menu_crm_helpdesk_hc"
+        parent="operation_hc_menu"
+        action="crm_helpdesk_hc_action"/>
+
+    <record id="crm_helpdesk_om_action" model="ir.actions.act_window">
+        <field name="name">Job</field>
+        <field name="res_model">crm.helpdesk</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="domain">[('type', '=', 'om')]</field>
+        <field name="context">{'default_type': 'om'}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create new Service.
+          </p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="menu_crm_helpdesk_om"
+        parent="operation_om_menu"
+        action="crm_helpdesk_om_action"/>
+
+</odoo>

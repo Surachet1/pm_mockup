@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="service_tree_view">
+        <field name="name">Services Tree</field>
+        <field name="model">sale.service</field>
+        <field name="arch" type="xml">
+            <tree colors="grey:state == 'expired';grey:state == 'draft';red:state == 'expiring';blue:state == 'active'" string="Services Tree">
+                <field name="name" />
+                <field name="service_count" string="AVL"/>
+                <field name="service_amount" string="AMT"/>
+                <field name="serial_no" />
+                <field name="sale_order" />
+                <field name="customer_code" />
+                <field name="customer" />
+                <field name="customer_address" />
+                <field name="detail" />
+                <field name="sale_comment" />
+                <field name="phone" />
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_form_view" model="ir.ui.view">
+        <field name="name">sale.service.form</field>
+        <field name="model">sale.service</field>
+        <field name="arch" type="xml">
+            <form string="Services Contract" version="7.0">
+                <header>
+                    <button name="button_active" string="Active" type="object"  states="draft" />
+                    <button name="extend_contract" confirm="Are you sure?" string="Extend" type="object"/>
+                    <button name="set_to_draft" string="Set to draft" type="object" states="active" />
+                    <button name="button_reactivate" string="Reactivate" type="object" states="expiring" />
+                    <button name="button_terminate" string="Terminate" type="object"  states="active,expiring" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,expiring,expired" statusbar_colors='{"Draft":"grey","invoice_except":"red","waiting_date":"blue"}' clickable="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                             <field name="name" />
+                             <field name="sale_order" attrs="{'readonly': [('state', '=', 'expired')]}" />
+                             <field name="service_amount" />
+                             <field name="service_count" invisible="1"/>
+                             <field name="service_count_show" />
+                             <field name="package_price" />
+                             <field name="start_date" attrs="{'readonly': [('state', '=', 'expired')]}" />
+                             <field name="finish_date" attrs="{'readonly': [('state', '=', 'expired')]}" />
+                             <field name="month_count" />
+                             <field name="job_count" />
+                        </group>
+                        <group>
+                             <field name="customer"/>
+                             <field name="customer_code" />
+                             <field name="phone" />
+                             <field name="sale_order_date" />
+                             <field name="contract_no" />
+                             <field name="invoice_no" />
+                             <field name="receipt_no" />
+                             <field name="ref_service_id" />
+                             <field name="extend_count" invisible="1"/>
+                             <field name="project_id" attrs="{'invisible': [('type', '=', 'hc')]}"/>
+                             <field name="type" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Service Contract">
+                           <field name="service_list" create="0" edit="0"/>
+                        </page>
+                        <page string="Service Detail">
+                            <group>
+                                <group colspan="6">
+                                    <field name="detail"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Sale Comment">
+                            <group>
+                                <group colspan="6">
+                                    <field name="sale_comment"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_hc_action" model="ir.actions.act_window">
+        <field name="name">Services Contract</field>
+        <field name="res_model">sale.service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="domain">[('type', '=', 'hc')]</field>
+        <field name="context">{'default_type': 'hc'}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create new Service.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="main_operation_hc" name="Operation HC"/>
+
+    <menuitem
+        id="operation_hc_menu"
+        parent="main_operation_hc"
+        name="Operation HC"/>
+
+    <menuitem
+        id="menu_service_hc"
+        parent="operation_hc_menu"
+        action="service_hc_action"/>
+
+    <record id="service_om_action" model="ir.actions.act_window">
+        <field name="name">Services Contract</field>
+        <field name="res_model">sale.service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="domain">[('type', '=', 'om')]</field>
+        <field name="context">{'default_type': 'om'}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create new Service.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="main_operation_om" name="Operation OM"/>
+
+    <menuitem
+        id="operation_om_menu"
+        parent="main_operation_om"
+        name="Operation OM"/>
+
+    <menuitem
+        id="menu_service_om"
+        parent="operation_om_menu"
+        action="service_om_action"/>
+
+</odoo>

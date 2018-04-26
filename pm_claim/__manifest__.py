@@ -2,13 +2,13 @@
 # © <YEAR(S)> <AUTHOR(S)>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Trinity Roots :: PM - Project",
-    "summary": "Project",
+    "name": "Trinity Roots :: PM - CRM Claim",
+    "summary": "Claim",
     "version": "10.0.1.0.0",
     "category": "CRM",
     "description": """
 
-This module for Project.
+This module for CRM Claim.
 ===========================================================
 
 
@@ -24,12 +24,12 @@ This module for Project.
     },
     "depends": [
         'base',
-        'project',
-        'pm_stock_request',
-        'pm_operation',
-        'pm_sale_order',
+        'crm',
+        'sales_team',
     ],
     'data': [
-        'views/project_views.xml',
+        'views/crm_claim_view.xml',
+        'views/partner_view.xml',
+        'views/crm_lead_view.xml',
     ],
 }

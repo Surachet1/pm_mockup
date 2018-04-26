@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_inherit_employe_form" model="ir.ui.view">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="History">
+                    <field name="emp_history_ids">
+                        <tree editable="bottom" >
+                            <field name="name"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="hr_training" string="Training">
+                    <field name="training_employee_ids">
+                        <tree editable="bottom">
+                            <field name="training_id"/>
+                            <field name="no_time"/>
+                            <field name="hours"/>
+                            <field name="date_issue"/>
+                            <field name="date_expired"/>
+                            <field name="date_training_expired"/>
+                            <field name="image"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Skill">
+                    <field name="skill_ids">
+                        <tree editable="bottom" >
+                            <field name="name"/>
+                            <field name="rating"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_inherit_hr_attendance_form" model="ir.ui.view">
+        <field name="name">hr.attendance.form</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <field name="check_in" position="before">
+                <field name="plan_check_in"/>
+                <field name="plan_check_out"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_inherit_hr_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <field name="check_in" position="before">
+                <field name="plan_check_in"/>
+                <field name="plan_check_out"/>
+            </field>
+        </field>
+    </record>
+</odoo>

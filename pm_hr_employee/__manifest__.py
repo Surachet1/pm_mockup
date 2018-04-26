@@ -2,13 +2,13 @@
 # © <YEAR(S)> <AUTHOR(S)>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Trinity Roots :: PM - Project",
-    "summary": "Project",
+    "name": "Trinity Roots :: PM - HR Employee",
+    "summary": "Employee",
     "version": "10.0.1.0.0",
-    "category": "CRM",
+    "category": "HR",
     "description": """
 
-This module for Project.
+This module for Employee.
 ===========================================================
 
 
@@ -24,12 +24,10 @@ This module for Project.
     },
     "depends": [
         'base',
-        'project',
-        'pm_stock_request',
-        'pm_operation',
-        'pm_sale_order',
+        'hr',
+        'hr_attendance',
     ],
     'data': [
-        'views/project_views.xml',
+        'views/hr_view.xml',
     ],
 }

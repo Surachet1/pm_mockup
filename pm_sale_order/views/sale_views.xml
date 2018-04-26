@@ -14,15 +14,14 @@
                 <field name="code"/>
                 <field name="partner_invoice_id"/>
                 <field name="partner_shipping_id"/>
+                <field name="department"/>
             </field>
             <field name="date_order" position="after">
                 <field name="ref"/>
                 <field name="warehouse_id"/>
-                <field name="ref"/>
-                <field name="quo_temp"/>
+                <field name="project_sale_id"/>
             </field>
             <field name="validity_date" position="after">
-                <field name="pricelist_id"/>
                 <field name="contract_no"/>
                 <field name="invoice_no"/>
                 <field name="receipt_no"/>

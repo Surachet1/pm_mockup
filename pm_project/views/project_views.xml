@@ -15,11 +15,30 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
+            <sheet position="before">
+                <header>
+                    <button name="button_active" string="Active" states="draft" type="object" />
+                    <button name="butto_reject" string="Reject" states="draft" type="object" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,reject"/>
+                </header>
+            </sheet>
+            <button name="toggle_active" position="after">
+                <button class="oe_stat_button" name="open_partner_claim" icon="fa-ticket"
+                    type="object">
+                    <field name="partner_claim" string="Claim" widget="statinfo" />
+                </button>
+            </button>
             <xpath expr="//notebook[last()]" position="inside">
-                <page string="Technician List" >
+                <page string="Member List" >
                     <field name="project_list_ids" >
                         <tree editable="bottom">
                             <field name="users_id" widget="selection"/>
+                            <field name="position"/>
+                            <field name="description"/>
+                            <field name="time_period"/>
+                            <field name="start_date"/>
+                            <field name="finish_date"/>
+                            <field name="date_time_working"/>
                         </tree>
                      </field>
                 </page>
@@ -35,6 +54,34 @@
                     <group class="oe_subtotal_footer oe_right">
                         <field name="amount_total"/>
                     </group>
+                </page>
+                <page string="Stock Request History" >
+                    <field name="stock_request_ids">
+                    </field>
+                </page>
+                <page string="Contract" >
+                    <field name="service_ids">
+                    </field>
+                </page>
+                <page string="Job" >
+                    <field name="helpdesk_ids">
+                    </field>
+                </page>
+                <page string="Sale">
+                    <field name="sale_ids" readonly="1" />
+                </page>
+                <page string="Job Order">
+                    <field name="project_sale_ids">
+                        <tree editable="bottom">
+                            <field name="sale_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="department"/>
+                            <field name="job_category"/>
+                            <field name="number_maid"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
                 </page>
             </xpath>
         </field>

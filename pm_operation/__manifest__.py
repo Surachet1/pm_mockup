@@ -2,13 +2,13 @@
 # © <YEAR(S)> <AUTHOR(S)>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Trinity Roots :: PM - Project",
-    "summary": "Project",
+    "name": "Trinity Roots :: PM - Operation",
+    "summary": "Operation",
     "version": "10.0.1.0.0",
-    "category": "CRM",
+    "category": "Operation",
     "description": """
 
-This module for Project.
+This module for Operation OM and HC.
 ===========================================================
 
 
@@ -24,12 +24,11 @@ This module for Project.
     },
     "depends": [
         'base',
-        'project',
-        'pm_stock_request',
-        'pm_operation',
-        'pm_sale_order',
+        'sale',
     ],
     'data': [
-        'views/project_views.xml',
+        'views/service_type_view.xml',
+        'views/service.xml',
+        'views/crm_helpdesk_view.xml',
     ],
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <record id="service_type_tree_view" model="ir.ui.view">
+            <field name="name">sale.service.type.tree</field>
+            <field name="model">sale.service.type</field>
+            <field name="arch" type="xml">
+                <tree string="Service Type">
+                    <field name="sequence" />
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="deduct" />
+                    <field name="leave" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="service_type_form_view" model="ir.ui.view">
+            <field name="name">sale.service.type.form</field>
+            <field name="model">sale.service.type</field>
+            <field name="arch" type="xml">
+                <form string="Service Type">
+                    <sheet>
+                        <group>
+                            <group>
+                                 <field name="sequence" />
+                                 <field name="name"/>
+                                 <field name="code"/>
+                                 <field name="deduct" />
+                                 <field name="leave" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_service_type_filter" model="ir.ui.view">
+            <field name="name">sale.service.type.select</field>
+            <field name="model">sale.service.type</field>
+            <field name="arch" type="xml">
+                <search string="Search Service">
+                    <field name="name" string="Name" />
+                    <filter name="deduct" string="Deduct" domain="[('deduct','=',True)]" />
+                </search>
+            </field>
+        </record>
+
+        <record id="action_sale_service_type" model="ir.actions.act_window">
+            <field name="name">Service Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.service.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_service_type_filter"/>
+            <field name="view_id" eval="False"/>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create new service type.
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+                action="action_sale_service_type"
+                name="Service Type"
+                id="service_menu"
+                parent="operation_hc_menu"
+                sequence="12"
+                />
+
+    </data>
+</openerp>

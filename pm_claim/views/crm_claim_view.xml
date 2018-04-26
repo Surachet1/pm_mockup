@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="crm_case_claims_tree_view">
+        <field name="name">CRM - Claims Tree</field>
+        <field name="model">crm.claim</field>
+        <field name="arch" type="xml">
+            <tree string="Claims">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="date_action_next"/>
+                <field name="action_next"/>
+                <field name="date_deadline" invisible="1"/>
+                <field name="date_closed" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="crm_case_claims_form_view">
+        <field name="name">CRM - Claims Form</field>
+        <field name="model">crm.claim</field>
+        <field name="arch" type="xml">
+            <form string="Claim">
+            <header>
+                <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,complete,incomplete"/>
+            </header>
+            <sheet string="Claims">
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                    </group>
+                </group>
+                <group colspan="4" col="4"  groups="base.group_user">
+                    <field name="user_id" />
+                    <field name="depart_respond" />
+                    <field name="priority" widget="priority"/>
+                    <field name="team_id"/>
+                    <field name="date_deadline"/>
+                </group>
+                <group colspan="4" col="4">
+                    <notebook>
+                        <page string="Claim Description">
+                            <group colspan="2" col="2" groups="base.group_user">
+                                <separator colspan="2" string="Claim Reporter"/>
+                                <field name="partner_id" string="Partner" required="1"/>
+                                <field name="partner_phone"/>
+                                <field name="email_from" widget="email"/>
+                            </group>
+                            <group colspan="2" col="2" groups="base.group_user">
+                                <separator colspan="2" string="Responsibilities"/>
+                                <group>
+                                    <field name="categ_res_type_id"/>
+                                    <field name="title_res_type_id" />
+                                    <field name="list_res_type_id"/>
+                                    <field name="cost_defect"/>
+                                    <field name="recommend"/>
+                                    <field name="feedback"/>
+                                </group>
+                            </group>
+                            <separator colspan="4" string="Claim/Action Description" groups="base.group_user"/>
+                            <field name="description" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Follow Up" groups="base.group_user">
+                            <group colspan="2" col="2">
+                                <separator colspan="2" string="Actions"/>
+                                <field name="date_action_next"/>
+                                <field name="action_next"/>
+                            </group>
+                            <group colspan="2" col="2" groups="base.group_no_one">
+                                <separator colspan="2" string="Dates"/>
+                                <field name="create_date"/>
+                                <field name="date_closed" invisible="1"/>
+                                <field name="write_date"/>
+                            </group>
+
+                            <group colspan="2" col="2">
+                                <separator colspan="2" string="Root Causes"/>
+                                <field name="cause" colspan="2" nolabel="1"/>
+                            </group>
+                            <group colspan="2" col="2">
+                                <separator colspan="2" string="Resolution Actions"/>
+                                <field name="type_action"/>
+                                <field name="resolution" colspan="2" nolabel="1" placeholder="Action Description..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_case_categ_claim0">
+        <field name="name">Claims</field>
+        <field name="res_model">crm.claim</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Record and track your customers' claims. Claims may be linked to a sales order or a lot.You can send emails with attachments and keep the full history for a claim (emails sent, intervention type and so on).Claims may automatically be linked to an email address using the mail gateway module.
+            </p>
+        </field>
+    </record>
+
+    <record id="respond_type_view_tree" model="ir.ui.view">
+        <field name="name">respond.type.tree</field>
+        <field name="model">respond.type</field>
+        <field name="arch" type="xml">
+            <tree editable="top" >
+                <field name="name"/>
+                <field name="parent_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="repond_type_action" model="ir.actions.act_window">
+        <field name="name">Respond Type</field>
+        <field name="res_model">respond.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new Respond type.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_aftersale" name="After-Sale Services"
+            parent="sales_team.menu_base_partner" sequence="6" />
+    <menuitem id="menu_claim_form" parent="menu_aftersale" action="crm_case_categ_claim0" sequence="1"/>
+    <menuitem id="menu_respond_type" parent="menu_aftersale" action="repond_type_action" sequence="1"/>
+
+</odoo>
