@@ -26,6 +26,11 @@ class CrmLead(models.Model):
         ('hc', 'HC'),
     ],
     string="หน่วยงาน")
+    gender = fields.Selection([
+        ('male', 'Male'),
+        ('female', 'Female'),
+    ],
+    string="Gender")
     department = fields.Selection([
         ('om', 'OM'),
         ('hc', 'HC'),

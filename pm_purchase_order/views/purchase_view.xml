@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Internal Notes">
+                    <field name="description"/>
+                </page>
+            </notebook>
+            <field name="date_order" position="after">
+                <label for="date_start" string="Receive Period from"/>
+                <div>
+                    <field name="date_start" class="oe_inline"/> to <field name="date_end" class="oe_inline"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>

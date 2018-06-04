@@ -326,6 +326,12 @@ class StockRequestLine(models.Model):
         digits_compute=dp.get_precision(
         'Product Unit of Measure')
     )
+    stock_qty = fields.Float(
+        'Product from stock QTY',
+        track_visibility='onchange',
+        digits_compute=dp.get_precision(
+        'Product Unit of Measure')
+    )
     request_id = fields.Many2one(
         'stock.request',
         'Purchase Request',
