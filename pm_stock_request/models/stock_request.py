@@ -9,7 +9,9 @@ _STATES = [
     ('draft', 'Draft'),
     ('wait_manager_approve', 'Waiting Manager Approve'),
     ('wait_purchase_approve', 'Waiting Purchase Approve'),
-    ('approved', 'Approved'),
+    ('approved', 'Picking Management'),
+    ('ready', 'Ready to Delivaery'),
+    ('done', 'Done'),
     ('rejected', 'Rejected'),
     ('cancel', 'Cancelled')
 ]
@@ -284,10 +286,11 @@ class StockRequestLine(models.Model):
     @api.depends('product_id', 'name', 'product_uom_id', 'product_qty',
                  'analytic_account_id', 'date_required')
     def _get_is_editable(self):
-        if self.request_id.state in ('wait_manager_approve', 'wait_purchase_approve', 'approved', 'rejected'):
-            self.is_editable = False
-        else:
-            self.is_editable = True
+        for obj in self:
+            if obj.request_id.state in ('wait_manager_approve', 'wait_purchase_approve', 'approved', 'rejected'):
+                obj.is_editable = False
+            else:
+                obj.is_editable = True
 
 
     product_id = fields.Many2one(

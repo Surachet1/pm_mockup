@@ -24,12 +24,22 @@
                             states="wait_manager_approve,wait_purchase_approve"
                             string="Reject"
                             type="object"/>
+                    <button name="%(pm_stock_request.action_stock_request_wizard)d"
+                            states="approved"
+                            string="Picking from Stock"
+                            class="oe_highlight"
+                            type="action"/>
+                    <button name="%(pm_stock_request.action_stock_purchase_wizard)d"
+                            states="approved"
+                            string="Purchase Request"
+                            class="oe_highlight"
+                            type="action"/>
                     <button name="button_cancel"
                             states="wait_manager_approve,wait_purchase_approve,approved"
                             string="Cancel"
                             type="object"/>
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,wait_manager_approve,wait_purchase_approve,approved,rejected,cancel"
+                           statusbar_visible="draft,wait_manager_approve,wait_purchase_approve,approved,ready,done"
                            statusbar_colors='{"approved":"blue", "rejected":"red"}'/>
                 </header>
                 <sheet>
